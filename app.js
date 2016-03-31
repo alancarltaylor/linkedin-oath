@@ -53,7 +53,7 @@ passport.use(new LinkedInStrategy({
     // to associate the LinkedIn account with a user record in your database,
     // and return that user instead.
     console.log(profile.id, profile.displayName)
-    return done(null, {id: profile.id, displayName: profile.displayName});
+    return done(null, {id: profile.id, displayName: profile.displayName, token: accessToken});
 });
 }));
 
@@ -83,6 +83,7 @@ app.use(function (req, res, next) {
     app.locals.user = null;
   }else {
     app.locals.user = req.session.passport.user;
+    req.user = req.session.passport.user;
   }
   next()
 })

@@ -79,9 +79,14 @@ passport.deserializeUser(function(user, done) {
 });
 
 app.use(function (req, res, next) {
-  res.locals.user = req.session.passport.user
+  if (!req.session.passport) {
+    app.locals.user = null;
+  }else {
+    app.locals.user = req.session.passport.user;
+  }
   next()
 })
+
 app.use('/', routes);
 app.use('/users', users);
 
